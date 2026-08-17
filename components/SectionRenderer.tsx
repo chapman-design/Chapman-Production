@@ -61,11 +61,11 @@ const StandardSection: React.FC<{
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.8 }}
-      className={`flex flex-col ${isLeft ? 'md:flex-row' : 'md:flex-row-reverse'} gap-12 mb-24 items-center ${section.isSpecial ? 'bg-stone-100 -mx-6 px-6 py-16 md:-mx-20 md:px-20 rounded-sm' : ''}`}
+      className={`flex flex-col ${isLeft ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-12 mb-24 items-center ${section.isSpecial ? 'bg-stone-100 -mx-6 px-6 py-16 lg:-mx-20 lg:px-20 rounded-sm' : ''}`}
     >
       {section.image && (
         <motion.div 
-          className="w-full md:w-1/2 overflow-hidden shrink-0"
+          className="w-full lg:w-1/2 overflow-hidden shrink-0"
           viewport={{ once: false, amount: 0.35, margin: "-10% 0px -10% 0px" }}
           onViewportEnter={() => setIsInView(true)}
           onViewportLeave={() => setIsInView(false)}
@@ -75,13 +75,13 @@ const StandardSection: React.FC<{
             transition={{ duration: 1.2, ease: [0.33, 1, 0.68, 1] }}
             src={getImageUrl(section.image)}
             alt={section.imageCaption || section.title || "Design project"}
-            className={`w-full aspect-[4/3] md:aspect-auto md:h-[600px] object-cover shadow-sm hybrid-bloom-image ${shouldBloom ? 'in-view' : ''}`}
+            className={`w-full aspect-[4/3] lg:aspect-auto lg:h-[600px] object-cover shadow-sm hybrid-bloom-image ${shouldBloom ? 'in-view' : ''}`}
             loading="lazy"
             referrerPolicy="no-referrer"
           />
         </motion.div>
       )}
-      <div className="w-full md:w-1/2 space-y-6">
+      <div className="w-full lg:w-1/2 space-y-6">
         {isHeritage && logoUrl && (
           <div className="mb-6 flex justify-start">
             <img 
