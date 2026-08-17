@@ -1,120 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Maximize2, X } from 'lucide-react';
-import { Section, GalleryImage } from '../types';
-import ReactMarkdown from 'react-markdown';
-import remarkBreaks from 'remark-breaks';
+const fs = require('fs');
 
-const getImageUrl = (url?: string) => {
-  if (!url) return '';
-  if (url.startsWith('data:') || url.startsWith('http') || url.startsWith('/')) return url;
-  return `/${url}`;
-};
+// We have too many rogue brackets caused by blind sed replacements.
+// Let's rewrite the Gallery and Map sections to be perfectly clean React.
 
-// Global / shared hook that detects when user has initiated scrolling
-const useHasUserScrolled = () => {
-  const [hasScrolled, setHasScrolled] = useState(false);
+let code = fs.readFileSync('components/SectionRenderer.tsx', 'utf8');
 
-  useEffect(() => {
-    // Check if page is already scrolled down on load (e.g. refresh)
-    if (window.scrollY > 0) {
-      setHasScrolled(true);
-      return;
-    }
-
-    const handleScrollOrTouch = () => {
-      if (window.scrollY > 0) {
-        setHasScrolled(true);
-        window.removeEventListener('scroll', handleScrollOrTouch);
-        window.removeEventListener('touchmove', handleScrollOrTouch);
-      }
-    };
-
-    window.addEventListener('scroll', handleScrollOrTouch, { passive: true });
-    window.addEventListener('touchmove', handleScrollOrTouch, { passive: true });
-
-    return () => {
-      window.removeEventListener('scroll', handleScrollOrTouch);
-      window.removeEventListener('touchmove', handleScrollOrTouch);
-    };
-  }, []);
-
-  return hasScrolled;
-};
-
-const StandardSection: React.FC<{ 
-  section: Section; 
-  idx: number;
-  logoUrl?: string; 
-  siteName?: string; 
-  hasScrolled: boolean 
-}> = ({ section, idx, logoUrl, siteName, hasScrolled }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isInView, setIsInView] = useState(false);
-  const isLeft = section.pos ? section.pos === 'left' : idx % 2 === 0;
-  const isHeritage = section.title === "The Heritage";
-
-  const shouldBloom = isInView && hasScrolled;
-
-  return (
-    <motion.div 
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.8 }}
-      className={`flex flex-col ${!section.image ? '' : isLeft ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-12 mb-24 ${!section.image ? 'items-start' : 'items-center'} ${section.isSpecial ? 'bg-stone-100 -mx-6 px-6 py-16 lg:-mx-20 lg:px-20 rounded-sm' : ''}`}
-    >
-      {section.image && (
-        <motion.div 
-          className="w-full lg:w-1/2 overflow-hidden shrink-0"
-          viewport={{ once: false, amount: 0.35, margin: "-10% 0px -10% 0px" }}
-          onViewportEnter={() => setIsInView(true)}
-          onViewportLeave={() => setIsInView(false)}
-        >
-          <motion.img
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 1.2, ease: [0.33, 1, 0.68, 1] }}
-            src={getImageUrl(section.image)}
-            alt={section.imageCaption || section.title || "Design project"}
-            className={`w-full aspect-[4/3] lg:aspect-auto lg:h-[600px] object-cover shadow-sm hybrid-bloom-image ${shouldBloom ? 'in-view' : ''}`}
-            loading="lazy"
-            referrerPolicy="no-referrer"
-          />
-        </motion.div>
-      )}
-      <div className={`w-full ${section.image ? 'lg:w-1/2' : 'max-w-4xl'} space-y-6`}>
-        {isHeritage && logoUrl && (
-          <div className="mb-6 flex justify-start">
-            <img 
-              src={logoUrl} 
-              alt={siteName || "Chapman Design Associates Logo"} 
-              className="h-32 md:h-48 w-auto object-contain select-none mix-blend-multiply" 
-              referrerPolicy="no-referrer"
-            />
-          </div>
-        )}
-        {section.title && <h2 className="text-3xl font-bold text-stone-900 tracking-tight">{section.title}</h2>}
-        <div 
-          className={`text-stone-800 leading-relaxed text-lg font-light prose prose-stone max-w-none ${!isExpanded && section.content && section.content.length > 600 ? 'line-clamp-6' : ''}`}
-        >
-          <ReactMarkdown remarkPlugins={[remarkBreaks]}>
-            {(section.content || '').replace(/(?<!\n)\n(?!\n)/g, '\n\n')}
-          </ReactMarkdown>
-        </div>
-        {section.content && section.content.length > 600 && (
-          <button 
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="text-xs uppercase tracking-[0.3em] font-bold border-b border-stone-900 pb-2 hover:text-stone-600 hover:border-stone-600 transition-colors cursor-pointer"
-          >
-            {isExpanded ? 'Minimize' : 'Read Full Description'}
-          </button>
-        )}
-      </div>
-    </motion.div>
-  );
-};
-
-const GalleryCard: React.FC<{ 
+// Isolate everything before GalleryCard
+const parts = code.split('const GalleryCard: React.FC');
+if (parts.length === 2) {
+  let newCode = parts[0] + `const GalleryCard: React.FC<{ 
   img: GalleryImage; 
   idx: number; 
   hasScrolled: boolean; 
@@ -140,7 +34,7 @@ const GalleryCard: React.FC<{
         <img 
           src={getImageUrl(img.file)} 
           alt={img.caption} 
-          className={`w-full h-full object-cover hybrid-bloom-image ${shouldBloom ? 'in-view' : ''} group-hover:scale-105`}
+          className={\`w-full h-full object-cover hybrid-bloom-image \${shouldBloom ? 'in-view' : ''} group-hover:scale-105\`}
           loading="lazy"
           referrerPolicy="no-referrer"
         />
@@ -253,7 +147,7 @@ export const SectionRenderer: React.FC<{ sections: Section[]; logoUrl?: string; 
     <>
       {sections.map((section, idx) => {
         switch (section.type) {
-          case 'standard': return <StandardSection key={idx} idx={idx} section={section} logoUrl={logoUrl} siteName={siteName} hasScrolled={hasScrolled} />;
+          case 'standard': return <StandardSection key={idx} section={section} logoUrl={logoUrl} siteName={siteName} hasScrolled={hasScrolled} />;
           case 'gallery': return <GallerySection key={idx} section={section} hasScrolled={hasScrolled} />;
           case 'map': return <MapSection key={idx} />;
           default: return null;
@@ -262,3 +156,7 @@ export const SectionRenderer: React.FC<{ sections: Section[]; logoUrl?: string; 
     </>
   );
 };
+`;
+
+  fs.writeFileSync('components/SectionRenderer.tsx', newCode);
+}
