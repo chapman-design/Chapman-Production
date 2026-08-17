@@ -1,0 +1,72 @@
+{
+  "entities": {
+    "SiteSettings": {
+      "title": "Site Settings",
+      "description": "Global configuration for the website",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "address": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "tagline": { "type": "string" },
+        "footer_description": { "type": "string" },
+        "logo": { "type": "string" },
+        "social_links": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "platform": { "type": "string" },
+              "url": { "type": "string" }
+            }
+          }
+        }
+      },
+      "required": ["name"]
+    },
+    "Page": {
+      "title": "Content Page",
+      "description": "A page of content on the website",
+      "type": "object",
+      "properties": {
+        "page_title": { "type": "string" },
+        "seo_title": { "type": "string" },
+        "meta_description": { "type": "string" },
+        "sections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": { "type": "string", "enum": ["standard", "gallery"] },
+              "pos": { "type": "string", "enum": ["left", "right"] },
+              "title": { "type": "string" },
+              "content": { "type": "string" },
+              "image": { "type": "string" },
+              "images": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "file": { "type": "string" },
+                    "caption": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "firestore": {
+    "/settings/main": {
+      "schema": "SiteSettings",
+      "description": "The main site configuration"
+    },
+    "/pages/{pageId}": {
+      "schema": "Page",
+      "description": "Individual pages of the website"
+    }
+  }
+}

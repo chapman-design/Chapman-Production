@@ -1,0 +1,84 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-sans: "Open Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Bodoni Moda", serif;
+  
+  /* Custom contrast-optimized stone colors */
+  --color-stone-50: #fafaf9;
+  --color-stone-100: #f5f5f4;
+  --color-stone-200: #e7e5e4;
+  --color-stone-300: #d6d3d1;
+  --color-stone-400: #a8a29e;
+  --color-stone-500: #78716c;
+  --color-stone-600: #57534e;
+  --color-stone-700: #44403c;
+  --color-stone-800: #292524;
+  --color-stone-900: #1c1917;
+}
+
+@layer base {
+  body {
+    @apply bg-stone-50 text-stone-900 font-sans antialiased;
+  }
+  h1, h2, h3, h4, h5, h6, .brand-font {
+    @apply font-serif;
+  }
+  
+  /* Accessibility: Ensure focus states are visible */
+  a:focus-visible, button:focus-visible {
+    @apply outline-2 outline-offset-2 outline-stone-900;
+  }
+}
+
+.line-clamp-6 {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+}
+
+/* Custom scrollbar for a premium feel */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-stone-50;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-stone-300 rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-stone-400;
+}
+
+/* Hybrid Scroll-Bloom Photography Transition */
+.hybrid-bloom-image {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-transition: -webkit-filter 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: filter 1.4s cubic-bezier(0.4, 0, 0.2, 1), -webkit-filter 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: filter, -webkit-filter;
+}
+
+/* When in view: slow, serene delayed bloom into color */
+.hybrid-bloom-image.in-view {
+  -webkit-filter: grayscale(0%);
+  filter: grayscale(0%);
+  -webkit-transition: -webkit-filter 3.8s cubic-bezier(0.25, 1, 0.4, 1) 0.4s;
+  transition: filter 3.8s cubic-bezier(0.25, 1, 0.4, 1) 0.4s, -webkit-filter 3.8s cubic-bezier(0.25, 1, 0.4, 1) 0.4s;
+}
+
+/* Hover override for all devices */
+.hybrid-bloom-image:hover,
+.group:hover .hybrid-bloom-image {
+  -webkit-filter: grayscale(0%);
+  filter: grayscale(0%);
+  /* Accelerate the bloom heavily if the user explicitly hovers over it */
+  -webkit-transition: -webkit-filter 0.5s cubic-bezier(0.33, 1, 0.68, 1), -webkit-transform 1s cubic-bezier(0.33, 1, 0.68, 1) !important;
+  transition: filter 0.5s cubic-bezier(0.33, 1, 0.68, 1), transform 1s cubic-bezier(0.33, 1, 0.68, 1), -webkit-filter 0.5s cubic-bezier(0.33, 1, 0.68, 1), -webkit-transform 1s cubic-bezier(0.33, 1, 0.68, 1) !important;
+}
+

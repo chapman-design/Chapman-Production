@@ -1,0 +1,11 @@
+{
+  "name": "Chapman Design Associates",
+  "description": "Modern and conservative residential design firm website inspired by the Bistro Elan CMS structure.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

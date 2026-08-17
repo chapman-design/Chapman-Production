@@ -1,0 +1,188 @@
+{
+    "site_settings": {
+        "name": "Chapman Design Associates",
+        "address": "620 S El Monte Ave, Los Altos, CA 94022",
+        "phone": "650.941.6890",
+        "email": "info@wjcda.com",
+        "tagline": "Residential Design",
+        "footer_description": "A dedication to the residential design heritage of the Bay Area, crafting homes that endure for generations through thoughtful planning and meticulous materiality.",
+		"logo": "",
+	    "social_links": [
+	      { "platform": "instagram", "url": "#" },
+	      { "platform": "linkedin", "url": "#" }
+	    ]
+    },
+  "pages": {
+    "home": {
+      "page_title": "Residential Design of Distinction",
+      "seo_title": "Chapman Design Associates | Residential Design Los Altos",
+      "meta_description": "Premier residential design firm in Los Altos, specializing in custom home planning and design for over 30 years.",
+      "sections": [
+        {
+          "type": "standard",
+          "pos": "left",
+          "title": "The Heritage",
+          "content": "Chapman Design Associates is a small residential design firm located in Los Altos, California. The Principal of the firm, Walter Chapman, has been designing homes for thirty years. Working primarily in the western foothill communities of Santa Clara and San Mateo counties, CDA has helped over 800 clients realize their goals and dreams for their homes and their families.",
+          "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200"
+        },
+        {
+          "type": "standard",
+          "pos": "right",
+          "title": "The Approach",
+          "content": "As a referral based company, personal attention to our client's needs, clear and efficiently prepared plans, and an eye for design have been the hallmark of our practice. A working relationship with planning and building department staffs, and connections with local contractors, ensures a smooth process for our clients.",
+          "image": "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=1200"
+        },
+        {
+          "type": "standard",
+          "pos": "left",
+          "title": "The Experience",
+          "content": "From the first conceptual design to the gleam of fresh paint on the finished product, our goal is to make the experience of building a home an enjoyable one. Please explore our site. We have tried to provide enough general information about how we work, examples of the homes we have designed and a few personal touches so that you may have a general sense of who we are, and what we can do to help you with your design needs.",
+          "image": "https://images.unsplash.com/photo-1600607687940-4ad236f699c2?auto=format&fit=crop&q=80&w=1200"
+        }
+      ]
+    },
+    "featured-home": {
+      "page_title": "Featured Residence",
+      "sections": [
+        {
+          "type": "standard",
+          "title": "A Study in Light and Space",
+          "content": "This featured project demonstrates our commitment to creating spaces that are both beautiful and highly functional. Every detail was carefully considered to harmonize with the site's natural topography.",
+          "image": "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80&w=1200"
+        },
+        {
+          "type": "gallery",
+          "images": [
+            { "file": "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80&w=800", "caption": "Exterior View" },
+            { "file": "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=800", "caption": "Living Area" },
+            { "file": "https://images.unsplash.com/photo-1600607687940-4ad236f699c2?auto=format&fit=crop&q=80&w=800", "caption": "Kitchen Detail" }
+          ]
+        }
+      ]
+    },
+    "new-homes": {
+      "page_title": "New Custom Homes",
+      "sections": [
+        {
+          "type": "standard",
+          "title": "Ground-Up Design",
+          "content": "Our new home designs focus on creating a cohesive vision from the foundation up. We specialize in navigating local zoning and planning requirements to maximize the potential of your property.",
+          "image": "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=1200"
+        },
+        {
+          "type": "gallery",
+          "images": [
+            { "file": "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=800", "caption": "Modern Estate" },
+            { "file": "https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?auto=format&fit=crop&q=80&w=800", "caption": "Contemporary Villa" }
+          ]
+        }
+      ]
+    },
+    "remodels": {
+      "page_title": "Residential Remodels",
+      "sections": [
+        {
+          "type": "standard",
+          "title": "Transforming Spaces",
+          "content": "Remodeling requires a sensitive touch to blend the old with the new. We help homeowners reimagine their existing spaces to better suit contemporary lifestyles while respecting the original structure.",
+          "image": "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&q=80&w=1200"
+        },
+        {
+          "type": "gallery",
+          "images": [
+            { "file": "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&q=80&w=800", "caption": "Kitchen Remodel" }
+          ]
+        }
+      ]
+    },
+    "additions": {
+      "page_title": "Home Additions",
+      "sections": [
+        {
+          "type": "standard",
+          "title": "Expanding Your Horizons",
+          "content": "Whether adding a master suite or expanding a family room, our additions are designed to look as though they were always part of the original home.",
+          "image": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=1200"
+        },
+        {
+          "type": "gallery",
+          "images": []
+        }
+      ]
+    },
+    "adus": {
+      "page_title": "Accessory Dwelling Units",
+      "sections": [
+        {
+          "type": "standard",
+          "title": "Smart Small-Scale Living",
+          "content": "ADUs provide versatile space for guests, family, or rental income. We specialize in efficient designs that make the most of limited footprints.",
+          "image": "https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&q=80&w=1200"
+        },
+        {
+          "type": "gallery",
+          "images": []
+        }
+      ]
+    },
+    "interiors": {
+      "page_title": "Interior Planning",
+      "sections": [
+        {
+          "type": "standard",
+          "title": "The Art of the Interior",
+          "content": "Our interior planning services ensure that the inside of your home is as well-considered as the outside. We focus on flow, lighting, and materiality to create cohesive environments.",
+          "image": "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=1200"
+        },
+        {
+          "type": "gallery",
+          "images": []
+        }
+      ]
+    },
+    "services": {
+      "page_title": "Our Services",
+      "sections": [
+        {
+          "type": "standard",
+          "title": "Comprehensive Design",
+          "content": "From initial site strategy to final interior planning, we provide a full range of residential design services tailored to your specific needs.",
+          "image": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=1200"
+        }
+      ]
+    },
+    "consultants": {
+      "page_title": "Our Consultants",
+      "sections": [
+        {
+          "type": "standard",
+          "title": "A Network of Experts",
+          "content": "We collaborate with a trusted network of structural engineers, landscape designers, and contractors to ensure every project is built to the highest standards.",
+          "image": "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=1200"
+        }
+      ]
+    },
+    "reviews": {
+      "page_title": "Client Reviews",
+      "sections": [
+        {
+          "type": "standard",
+          "title": "What Our Clients Say",
+          "content": "Our reputation is built on the satisfaction of our clients. We pride ourselves on clear communication and exceptional design results.",
+          "image": "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1200"
+        }
+      ]
+    },
+    "about": {
+      "page_title": "About CDA",
+      "sections": [
+        {
+          "type": "standard",
+          "title": "A Legacy of Local Design",
+          "content": "Chapman Design Associates is a small residential design firm located in Los Altos, California. The Principal of the firm, Walter Chapman, has been designing homes for thirty years. Working primarily in the western foothill communities of Santa Clara and San Mateo counties, CDA has helped over 800 clients realize their goals and dreams for their homes and their families.\n\nAs a referral based company, personal attention to our client's needs, clear and efficiently prepared plans, and an eye for design have been the hallmark of our practice. A working relationship with planning and building department staffs, and connections with local contractors, ensures a smooth process for our clients.\n\nFrom the first conceptual design to the gleam of fresh paint on the finished product, our goal is to make the experience of building a home an enjoyable one. Please explore our site. We have tried to provide enough general information about how we work, examples of the homes we have designed and a few personal touches so that you may have a general sense of who we are, and what we can do to help you with your design needs.\n\n### Sincerely,\n\n**Walter Chapman and the staff at Chapman Design Associates**",
+          "image": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,69 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // 0. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- Helpers ---
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        (request.auth.token.email == 'kentrw@gmail.com' && request.auth.token.email_verified == true) ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // --- Schemas ---
+    function isValidSiteSettings(data) {
+      return data.keys().hasAll(['name']) &&
+             data.name is string && data.name.size() > 0 && data.name.size() <= 200 &&
+             (data.get('email', '') is string) &&
+             (data.get('phone', '') is string) &&
+             (data.get('tagline', '') is string);
+    }
+
+    function isValidPage(data) {
+      return data.keys().hasAll(['page_title']) &&
+             data.page_title is string && data.page_title.size() <= 200 &&
+             (data.get('sections', []) is list);
+    }
+
+    // --- Collection Rules ---
+    match /settings/{settingsId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidSiteSettings(incoming()) && isValidId(settingsId);
+      allow update: if isAdmin() && isValidSiteSettings(incoming());
+      allow delete: if isAdmin();
+    }
+
+    match /pages/{pageId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidPage(incoming()) && isValidId(pageId);
+      allow update: if isAdmin() && isValidPage(incoming());
+      allow delete: if isAdmin();
+    }
+
+    match /admins/{adminId} {
+       allow read: if isSignedIn();
+       allow write: if false; // Only manageable through console or seed
+    }
+  }
+}
