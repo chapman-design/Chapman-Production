@@ -227,3 +227,4 @@ export const SectionRenderer: React.FC<{ sections: Section[]; logoUrl?: string; 
     </>
   );
 };
+// Triggering AI Studio GitHub sync
