@@ -50,7 +50,7 @@ const StandardSection: React.FC<{ section: Section; idx: number; logoUrl?: strin
   const shouldBloom = isInView && hasScrolled;
 
   return (
-    <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.8 }} className={`mb-24 ${section.isSpecial ? 'bg-stone-100 -mx-6 px-6 py-16 lg:-mx-20 lg:px-20 rounded-sm' : ''} clear-both`}>
+    <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.8 }} className={`mb-24 ${section.isSpecial ? 'bg-stone-100 -mx-6 px-6 py-16 lg:-mx-20 lg:px-20 rounded-sm' : ''} flow-root`}>
       <div className="w-full">
         {section.image && (
           <motion.div className={`w-full lg:w-1/2 lg:mb-6 overflow-hidden shrink-0 ${isLeft ? 'lg:float-left lg:mr-12' : 'lg:float-right lg:ml-12'} mb-8`} viewport={{ once: false, amount: 0.35, margin: '-10% 0px -10% 0px' }} onViewportEnter={() => setIsInView(true)} onViewportLeave={() => setIsInView(false)}>
@@ -69,7 +69,7 @@ const StandardSection: React.FC<{ section: Section; idx: number; logoUrl?: strin
           </ReactMarkdown>
         </div>
         {section.content && section.content.length > 600 && (
-          <div className="clear-both pt-6">
+          <div className="pt-6 mt-6">
             <button onClick={() => setIsExpanded(!isExpanded)} className="text-xs uppercase tracking-[0.3em] font-bold border-b border-stone-900 pb-2 hover:text-stone-600 hover:border-stone-600 transition-colors cursor-pointer">{isExpanded ? 'Minimize' : 'Read Full Description'}</button>
           </div>
         )}
