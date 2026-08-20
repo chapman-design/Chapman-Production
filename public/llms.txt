@@ -1,21 +1,31 @@
-# Chapman Design Associates
+# Chapman Design Associates (CDA)
+> Premier Residential Design & Custom Architecture Studio based in Palo Alto and Los Altos, California.
 
-Chapman Design Associates is a premier residential design firm based in Los Altos, California, specializing in high-end residential architecture, interior planning, and site strategy.
+## Summary
+Chapman Design Associates specializes in high-end custom residential design, additions, whole-home remodels, and site strategy across Silicon Valley and the greater San Francisco Bay Area. Founded on over thirty years of practice, the firm provides architectural planning, zoning compliance, construction documentation, and coordination with leading structural and civil consultants.
+
+## Studio Details
+- **Website:** https://chapmandesignassociates.com
+- **Studio Address:** 2363 Birch Street, Suite A, Palo Alto, CA 94306
+- **Telephone:** (650) 327-1234
+- **Email:** studio@chapmandesign.com
+- **Service Area:** Palo Alto, Los Altos, Los Altos Hills, Menlo Park, Atherton, Woodside, Portola Valley, Mountain View, and surrounding Bay Area communities.
 
 ## Core Services
-- Residential Design
-- Interior Planning
-- Site Strategy
-- New Homes
-- Remodels
-- Additions
-- ADUs (Accessory Dwelling Units)
+1. **Design Consultation:** Complimentary initial consultation to explore project feasibility, client aspirations, and design direction.
+2. **As-Built Documentation:** Accurate spatial and boundary measurement of existing structures to evaluate setback and zoning compliance.
+3. **Preliminary & Schematic Design:** Multi-layer transparent hand-sketching and iterative floor plan exploration tailored to sunlight and site topography.
+4. **Construction Documents & Permitting:** Complete architectural drawing packages for municipal zoning review, structural engineering review, Title-24 energy compliance, and general contractor bidding.
+5. **Construction Management / Site Oversight:** Targeted field review during foundation and framing phases to verify built accuracy against approved drawings.
 
-## Contact Information
-- Address: 620 S El Monte Ave, Los Altos, CA 94022
-- Phone: 650.941.6890
-- Email: info@wjcda.com
-- Website: https://wjcda.com
+## Consultant Coordination
+Chapman Design Associates coordinates closely with licensed specialists, including:
+- Structural Engineers (shear walls, hold downs, lateral systems)
+- Soils & Geotechnical Engineers (sub-surface investigation and foundation engineering)
+- Civil Engineers (grading, storm water retention, drainage plans)
+- Title-24 Energy Analysts (California energy code compliance)
+- Landscape Architects & Interior Designers
+- Vetted General Contractors from a 30-year preferred network
 
-## Design Philosophy
-A dedication to the residential design heritage of the Bay Area, crafting homes that endure for generations through thoughtful planning and meticulous materiality.
+## Design Philosophy & Heritage
+A dedication to the architectural heritage and microclimates of Northern California, designing timeless homes that endure for generations through thoughtful floor planning, natural illumination, and meticulous materiality.

@@ -96,7 +96,14 @@ const Layout: React.FC<LayoutProps> = ({ children, activePage, settings = { name
   };
 
   return (
-    <div className="min-h-screen flex flex-col selection:bg-stone-900 selection:text-white">
+        <div className="min-h-screen flex flex-col selection:bg-stone-900 selection:text-white">
+      {/* Skip to Main Content Link for ADA Keyboard Accessibility */}
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-stone-900 focus:text-white focus:outline-none focus:ring-2 focus:ring-stone-400 rounded-sm font-bold text-xs uppercase tracking-wider"
+      >
+        Skip to main content
+      </a>
       {/* Mobile Sticky Header */}
       <div className="md:hidden sticky top-0 z-50 bg-stone-50 border-b border-stone-200 px-6 py-3.5 flex justify-between items-center">
         <a href="/" className="block">
@@ -113,8 +120,9 @@ const Layout: React.FC<LayoutProps> = ({ children, activePage, settings = { name
         </a>
         <button 
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="p-2 text-stone-900"
-          aria-label="Toggle Menu"
+          aria-label="Toggle navigation menu"
+          aria-expanded={isMenuOpen}
+          className="p-2 text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 rounded"
         >
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -153,7 +161,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activePage, settings = { name
                       onMouseLeave={() => setActiveDropdown(null)}
                     >
                       <button
-                        className={`text-[13px] uppercase tracking-[0.35em] font-black transition-all flex items-center gap-1 h-full py-1 ${
+                        aria-haspopup="true" aria-expanded={activeDropdown === item.label} className={`text-[13px] uppercase tracking-[0.35em] font-black transition-all flex items-center gap-1 h-full py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 rounded ${
                           isItemActive(item) ? 'text-stone-900' : 'text-stone-500 hover:text-stone-900'
                         }`}
                       >
@@ -252,7 +260,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activePage, settings = { name
         )}
       </AnimatePresence>
 
-      <main className="flex-grow container mx-auto px-6 md:px-12 pt-8 md:pt-12 pb-16 md:pb-24">
+      <main id="main-content" tabIndex={-1} className="flex-grow container mx-auto px-6 md:px-12 pt-8 md:pt-12 pb-16 md:pb-24 outline-none">
         <div className="max-w-7xl mx-auto">
           {children}
         </div>
@@ -307,7 +315,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activePage, settings = { name
                   href={link.url} 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="hover:text-stone-900 transition-colors flex items-center gap-2"
+                  aria-label={`Follow Chapman Design on ${link.platform}`} className="hover:text-stone-900 transition-colors flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 rounded"
                 >
                   <SocialIcon platform={link.platform} />
                   {link.platform}

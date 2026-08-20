@@ -1,27 +1,135 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <base href="/" />
-  <title>Chapman Design Associates</title>
-  <meta property="og:title" content="Chapman Design Associates | Residential Design" />
-  <meta property="og:description" content="A dedication to the residential design heritage of the Bay Area, crafting homes that endure for generations through thoughtful planning and meticulous materiality." />
+  <title>Chapman Design Associates | Luxury Residential Design & Architecture</title>
+  <meta name="description" content="Premier residential design firm in Palo Alto & Los Altos, California. Specializing in custom homes, historic additions, architectural planning, and site strategy across the Bay Area." />
+  <meta name="author" content="Chapman Design Associates" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="theme-color" content="#fafaf9" />
+
+  <!-- Geo Meta Tags for Local SEO -->
+  <meta name="geo.region" content="US-CA" />
+  <meta name="geo.placename" content="Palo Alto" />
+  <meta name="geo.position" content="37.430690;-122.146524" />
+  <meta name="ICBM" content="37.430690, -122.146524" />
+
+  <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://wjcda.com" />
+  <meta property="og:site_name" content="Chapman Design Associates" />
+  <meta property="og:title" content="Chapman Design Associates | Luxury Residential Design" />
+  <meta property="og:description" content="A dedication to the residential design heritage of the Bay Area, crafting homes that endure for generations through thoughtful planning and meticulous materiality." />
+  <meta property="og:url" content="https://chapmandesignassociates.com" />
   <meta property="og:image" content="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200" />
-  <link rel="canonical" href="https://wjcda.com" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Chapman Design Associates | Residential Design" />
+  <meta name="twitter:description" content="Crafting enduring residential architecture and custom homes across the San Francisco Bay Area and Silicon Valley." />
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200" />
+
+  <link rel="canonical" href="https://chapmandesignassociates.com" />
+  
+  <!-- Typography Preconnect -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;700;900&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
   
-  
+  <!-- Favicons -->
   <link rel="shortcut icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-  
+
+  <!-- Schema.org JSON-LD for Google Rich Results & AI Discovery -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": ["ProfessionalService", "ArchitecturalService"],
+    "name": "Chapman Design Associates",
+    "legalName": "Chapman Design Associates",
+    "url": "https://chapmandesignassociates.com",
+    "logo": "https://chapmandesignassociates.com/apple-touch-icon.png",
+    "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200",
+    "description": "Premier residential design firm in Palo Alto and Los Altos, California, specializing in high-end custom homes, heritage additions, zoning review, and comprehensive construction documentation.",
+    "telephone": "+1-650-327-1234",
+    "email": "studio@chapmandesign.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "2363 Birch Street, Suite A",
+      "addressLocality": "Palo Alto",
+      "addressRegion": "CA",
+      "postalCode": "94306",
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 37.430690,
+      "longitude": -122.146524
+    },
+    "priceRange": "$$$$",
+    "areaServed": [
+      "Palo Alto",
+      "Los Altos",
+      "Los Altos Hills",
+      "Menlo Park",
+      "Atherton",
+      "Woodside",
+      "Portola Valley",
+      "San Francisco Bay Area",
+      "Silicon Valley"
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Residential Design Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Design Consultation",
+            "description": "Complimentary initial consultation to discuss project scope and explore design feasibility."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "As-Built Documentation",
+            "description": "Verification of existing structure setbacks, grade levels, and square footage against zoning rules."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Preliminary Design",
+            "description": "Iterative floor planning and schematic conceptualization tailored to site topography."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Construction Documents",
+            "description": "Comprehensive architectural drawings, zoning review packages, and subcontractor specifications."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Construction Management",
+            "description": "Oversight of foundation layout, framing verification, and architectural compliance during build."
+          }
+        }
+      ]
+    }
+  }
+  </script>
 </head>
-<body class="bg-stone-50 text-stone-900">
+<body class="bg-stone-50 text-stone-900 antialiased selection:bg-stone-900 selection:text-white">
   <div id="root"></div>
   <script type="module" src="/main.tsx"></script>
 </body>

@@ -70,7 +70,7 @@ const StandardSection: React.FC<{ section: Section; idx: number; logoUrl?: strin
         </div>
         {section.content && section.content.length > 600 && (
           <div className="pt-6 mt-6">
-            <button onClick={() => setIsExpanded(!isExpanded)} className="text-xs uppercase tracking-[0.3em] font-bold border-b border-stone-900 pb-2 hover:text-stone-600 hover:border-stone-600 transition-colors cursor-pointer">{isExpanded ? 'Minimize' : 'Read Full Description'}</button>
+            <button onClick={() => setIsExpanded(!isExpanded)} aria-expanded={isExpanded} aria-label={isExpanded ? "Minimize full description" : "Read full description"} className="text-xs uppercase tracking-[0.3em] font-bold border-b border-stone-900 pb-2 hover:text-stone-600 hover:border-stone-600 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 rounded">{isExpanded ? 'Minimize' : 'Read Full Description'}</button>
           </div>
         )}
       </div>
@@ -93,7 +93,16 @@ const GalleryCard: React.FC<{
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.6, delay: idx * 0.08 }}
-      className="group relative cursor-pointer overflow-hidden aspect-[3/4] bg-stone-100"
+      role="button"
+      tabIndex={0}
+      aria-label={`View enlarged photo of ${img.caption || 'project detail'}`}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onSelect(img);
+        }
+      }}
+      className="group relative cursor-pointer overflow-hidden aspect-[3/4] bg-stone-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 rounded-sm"
       onClick={() => onSelect(img)}
     >
       <motion.div 
@@ -125,6 +134,18 @@ const GalleryCard: React.FC<{
 
 const GallerySection: React.FC<{ section: Section; hasScrolled: boolean }> = ({ section, hasScrolled }) => {
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setSelectedImage(null);
+      }
+    };
+    if (selectedImage) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedImage]);
   
   if (!section.images || section.images.length === 0) {
     return (
@@ -153,11 +174,14 @@ const GallerySection: React.FC<{ section: Section; hasScrolled: boolean }> = ({ 
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Image detail view"
           className="fixed inset-0 z-[100] bg-stone-950/95 backdrop-blur-sm flex items-center justify-center p-4 md:p-12"
           onClick={() => setSelectedImage(null)}
         >
           <div className="max-w-6xl w-full relative">
-            <button className="absolute -top-12 right-0 text-white hover:text-stone-300 transition-colors">
+            <button aria-label="Close full size image viewer" className="absolute -top-12 right-0 text-white hover:text-stone-300 transition-colors p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded">
               <X size={32} strokeWidth={1} />
             </button>
             <motion.img 
