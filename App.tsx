@@ -28,6 +28,32 @@ const FALLBACK_DATA = {
     "name": "Chapman Design Associates"
   },
   "pages": {
+    "locations": {
+      "page_title": "Regional Reach",
+      "seo_title": "Regional Reach | Chapman Design Associates",
+      "meta_description": "A curated list of our luxury residential architectural commissions across the San Francisco Bay Area.",
+      "sections": [
+        {
+          "type": "locations_list",
+          "title": "Regional Reach",
+          "content": "Over the past thirty years, Chapman Design Associates has been entrusted with hundreds of residential commissions. Below is a selection of the communities where our work is prominently featured.",
+          "locations": [
+            {"city": "Palo Alto", "count": 215},
+            {"city": "Los Altos", "count": 184},
+            {"city": "Los Altos Hills", "count": 92},
+            {"city": "Menlo Park", "count": 76},
+            {"city": "Atherton", "count": 45},
+            {"city": "Portola Valley", "count": 38},
+            {"city": "Woodside", "count": 24},
+            {"city": "Mountain View", "count": 55},
+            {"city": "Sunnyvale", "count": 31},
+            {"city": "Cupertino", "count": 18},
+            {"city": "Carmel", "count": 4},
+            {"city": "San Francisco", "count": 12}
+          ]
+        }
+      ]
+    },
     "about": {
       "page_title": "About CDA",
       "sections": [
@@ -820,7 +846,11 @@ const App: React.FC = () => {
             pages: pagesData
           };
           
-          if (fullData.pages && fullData.pages.about && fullData.pages.about.page_title === "About the Studio") {
+          
+          if (fullData.pages && !fullData.pages.locations) {
+            fullData.pages.locations = FALLBACK_DATA.pages.locations;
+          }
+if (fullData.pages && fullData.pages.about && fullData.pages.about.page_title === "About the Studio") {
             fullData.pages.about.page_title = "About CDA";
           }
           
@@ -845,7 +875,11 @@ const App: React.FC = () => {
         const savedData = localStorage.getItem('cda_site_data');
         if (savedData) {
           const parsed = JSON.parse(savedData);
-          if (parsed.pages && parsed.pages.about && parsed.pages.about.page_title === "About the Studio") {
+          
+          if (parsed.pages && !parsed.pages.locations) {
+            parsed.pages.locations = FALLBACK_DATA.pages.locations;
+          }
+if (parsed.pages && parsed.pages.about && parsed.pages.about.page_title === "About the Studio") {
             parsed.pages.about.page_title = "About CDA";
           }
           setSiteData(parsed);
@@ -862,7 +896,15 @@ const App: React.FC = () => {
           const contentType = response.headers.get('content-type');
           if (contentType && contentType.includes('application/json')) {
             const data = await response.json();
-            if (data.pages && data.pages.about && data.pages.about.page_title === "About the Studio") {
+            
+            if (data.pages && !data.pages.locations) {
+              data.pages.locations = FALLBACK_DATA.pages.locations;
+            }
+
+            if (data.pages && !data.pages.locations) {
+              data.pages.locations = FALLBACK_DATA.pages.locations;
+            }
+if (data.pages && data.pages.about && data.pages.about.page_title === "About the Studio") {
               data.pages.about.page_title = "About CDA";
             }
             setSiteData(data);
@@ -943,7 +985,7 @@ const App: React.FC = () => {
   useEffect(() => {
     if (siteData) {
       const pageKey = currentPage;
-      const pageData = siteData?.pages?.[pageKey] || siteData?.pages?.home || FALLBACK_DATA.pages.home;
+      const pageData = siteData?.pages?.[pageKey] || FALLBACK_DATA.pages[pageKey as keyof typeof FALLBACK_DATA.pages] || siteData?.pages?.home || FALLBACK_DATA.pages.home;
       const siteName = siteData?.site_settings?.name || 'Chapman Design Associates';
       const tagline = siteData?.site_settings?.tagline || '';
       
@@ -1035,7 +1077,7 @@ const App: React.FC = () => {
 
   // Map sub-project routes to their data keys if they differ
   const pageKey = currentPage;
-  const pageData = siteData?.pages?.[pageKey] || siteData?.pages?.home || FALLBACK_DATA.pages.home;
+  const pageData = siteData?.pages?.[pageKey] || FALLBACK_DATA.pages[pageKey as keyof typeof FALLBACK_DATA.pages] || siteData?.pages?.home || FALLBACK_DATA.pages.home;
 
   return (
     <Layout activePage={currentPage} settings={siteData?.site_settings}>

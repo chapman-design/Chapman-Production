@@ -236,6 +236,28 @@ const MapSection: React.FC = () => {
   );
 };
 
+
+const LocationsListSection: React.FC<{ section: Section }> = ({ section }) => {
+  return (
+    <div className="mb-24">
+      {section.title && <h2 className="text-3xl font-bold text-stone-900 tracking-tight mb-8 text-center">{section.title}</h2>}
+      {section.content && (
+        <div className="text-stone-600 text-center max-w-2xl mx-auto mb-16 text-lg font-light leading-relaxed">
+          <ReactMarkdown remarkPlugins={[remarkBreaks]}>{(section.content || '').replace(/(?<!\n)\n(?!\n)/g, '\n\n')}</ReactMarkdown>
+        </div>
+      )}
+      <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-4">
+        {section.locations?.map((loc, idx) => (
+          <div key={idx} className="flex justify-between items-center border-b border-stone-200 py-3 group hover:border-stone-400 transition-colors">
+            <span className="font-bold text-stone-900 tracking-tight">{loc.city}</span>
+            <span className="text-stone-500 font-medium font-mono text-sm">{loc.count}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 export const SectionRenderer: React.FC<{ sections: Section[]; logoUrl?: string; siteName?: string }> = ({ sections, logoUrl, siteName }) => {
   const hasScrolled = useHasUserScrolled();
   return (
@@ -244,6 +266,7 @@ export const SectionRenderer: React.FC<{ sections: Section[]; logoUrl?: string; 
         switch (section.type) {
           case 'standard': return <StandardSection key={idx} idx={idx} section={section} logoUrl={logoUrl} siteName={siteName} hasScrolled={hasScrolled} />;
           case 'gallery': return <GallerySection key={idx} section={section} hasScrolled={hasScrolled} />;
+          case 'locations_list': return <LocationsListSection key={idx} section={section} />;
           case 'map': return <MapSection key={idx} />;
           default: return null;
         }

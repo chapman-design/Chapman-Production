@@ -916,6 +916,96 @@ const Admin: React.FC<AdminProps> = ({ initialData, onSave }) => {
                             </div>
                           </div>
                         )}
+                        {section.type === 'locations_list' && (
+                          <div className="space-y-4">
+                            <input
+                              type="text"
+                              value={section.title || ''}
+                              onChange={(e) => {
+                                setData((prev: any) => {
+                                  const newData = JSON.parse(JSON.stringify(prev));
+                                  newData.pages[activePageKey].sections[idx].title = e.target.value;
+                                  return newData;
+                                });
+                              }}
+                              className="w-full text-xl font-bold border-b border-stone-200 pb-2 outline-none focus:border-stone-900"
+                              placeholder="Section Title"
+                            />
+                            <textarea
+                              value={section.content || ''}
+                              onChange={(e) => {
+                                setData((prev: any) => {
+                                  const newData = JSON.parse(JSON.stringify(prev));
+                                  newData.pages[activePageKey].sections[idx].content = e.target.value;
+                                  return newData;
+                                });
+                              }}
+                              className="w-full h-32 p-4 bg-stone-50 border border-stone-200 text-sm outline-none focus:border-stone-900 resize-none"
+                              placeholder="Section Description"
+                            />
+                            <div className="space-y-2 mt-4">
+                              <h5 className="text-[10px] uppercase tracking-widest font-black text-stone-900">Locations</h5>
+                              {section.locations?.map((loc: any, locIdx: number) => (
+                                <div key={locIdx} className="flex gap-4 items-center">
+                                  <input
+                                    type="text"
+                                    value={loc.city}
+                                    onChange={(e) => {
+                                      setData((prev: any) => {
+                                        const newData = JSON.parse(JSON.stringify(prev));
+                                        newData.pages[activePageKey].sections[idx].locations[locIdx].city = e.target.value;
+                                        return newData;
+                                      });
+                                    }}
+                                    className="flex-1 p-2 border border-stone-200 text-sm outline-none focus:border-stone-900"
+                                    placeholder="City Name"
+                                  />
+                                  <input
+                                    type="number"
+                                    value={loc.count}
+                                    onChange={(e) => {
+                                      setData((prev: any) => {
+                                        const newData = JSON.parse(JSON.stringify(prev));
+                                        newData.pages[activePageKey].sections[idx].locations[locIdx].count = parseInt(e.target.value) || 0;
+                                        return newData;
+                                      });
+                                    }}
+                                    className="w-24 p-2 border border-stone-200 text-sm outline-none focus:border-stone-900"
+                                    placeholder="Count"
+                                  />
+                                  <button
+                                    onClick={() => {
+                                      setData((prev: any) => {
+                                        const newData = JSON.parse(JSON.stringify(prev));
+                                        newData.pages[activePageKey].sections[idx].locations.splice(locIdx, 1);
+                                        return newData;
+                                      });
+                                    }}
+                                    className="p-2 text-stone-300 hover:text-red-500 transition-colors"
+                                  >
+                                    <Trash2 size={16} />
+                                  </button>
+                                </div>
+                              ))}
+                              <button
+                                onClick={() => {
+                                  setData((prev: any) => {
+                                    const newData = JSON.parse(JSON.stringify(prev));
+                                    if (!newData.pages[activePageKey].sections[idx].locations) {
+                                      newData.pages[activePageKey].sections[idx].locations = [];
+                                    }
+                                    newData.pages[activePageKey].sections[idx].locations.push({ city: '', count: 0 });
+                                    return newData;
+                                  });
+                                }}
+                                className="mt-2 text-xs font-bold uppercase tracking-wider flex items-center gap-1 text-stone-500 hover:text-stone-900 transition-colors"
+                              >
+                                <Plus size={12} /> Add Location
+                              </button>
+                            </div>
+                          </div>
+                        )}
+
 
                         {section.type === 'gallery' && (
                           <div className="space-y-8">

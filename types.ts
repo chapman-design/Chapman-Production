@@ -1,4 +1,4 @@
-export type SectionType = 'standard' | 'gallery' | 'map';
+export type SectionType = 'standard' | 'gallery' | 'map' | 'locations_list';
 
 export interface GalleryImage {
   file: string;
@@ -14,6 +14,7 @@ export interface Section {
   images?: GalleryImage[];
   pos?: 'left' | 'right';
   isSpecial?: boolean;
+  locations?: { city: string; count: number }[];
 }
 
 export interface PageData {
