@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Maximize2, X } from 'lucide-react';
+import { Maximize2, X, Star, Quote, ExternalLink, Award } from 'lucide-react';
 import { Section, GalleryImage } from '../types';
 import ReactMarkdown from 'react-markdown';
 import remarkBreaks from 'remark-breaks';
@@ -258,6 +258,129 @@ const LocationsListSection: React.FC<{ section: Section }> = ({ section }) => {
   );
 };
 
+
+const ReviewsListSection: React.FC<{ section: Section }> = ({ section }) => {
+  const reviews = section.reviews || [];
+  const badges = section.badges || [];
+
+  return (
+    <div className="mb-24">
+      {section.title && (
+        <div className="text-center mb-12">
+          <p className="text-[11px] uppercase tracking-[0.4em] text-stone-500 font-bold mb-3">Client Perspectives</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-stone-900 tracking-tight">{section.title}</h2>
+        </div>
+      )}
+      {section.content && (
+        <div className="text-stone-600 text-center max-w-2xl mx-auto mb-16 text-lg font-light leading-relaxed">
+          <ReactMarkdown remarkPlugins={[remarkBreaks]}>
+            {(section.content || '').replace(/(?<!\n)\n(?!\n)/g, '\n\n')}
+          </ReactMarkdown>
+        </div>
+      )}
+
+      {reviews.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          {reviews.map((rev, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.08 }}
+              className="bg-stone-50/70 border border-stone-200 p-8 md:p-10 flex flex-col justify-between hover:border-stone-400 transition-colors relative"
+            >
+              <div>
+                <div className="flex items-center justify-between gap-4 mb-6">
+                  {/* Rating Stars */}
+                  <div className="flex items-center gap-1 text-amber-700/80">
+                    {Array.from({ length: rev.rating || 5 }).map((_, sIdx) => (
+                      <Star key={sIdx} size={14} fill="currentColor" strokeWidth={0} />
+                    ))}
+                  </div>
+
+                  {/* Source Tag */}
+                  {rev.source && (
+                    <span className="text-[10px] uppercase tracking-widest font-bold px-2.5 py-1 bg-white border border-stone-200 text-stone-600 inline-flex items-center gap-1">
+                      {rev.sourceUrl ? (
+                        <a
+                          href={rev.sourceUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:text-stone-900 inline-flex items-center gap-1"
+                        >
+                          {rev.source} <ExternalLink size={10} />
+                        </a>
+                      ) : (
+                        rev.source
+                      )}
+                    </span>
+                  )}
+                </div>
+
+                {/* Quote Content */}
+                <div className="relative mb-8">
+                  <Quote size={24} className="text-stone-300 mb-3 opacity-60" />
+                  <blockquote className="text-stone-800 text-base md:text-lg font-light leading-relaxed italic">
+                    "{rev.quote}"
+                  </blockquote>
+                </div>
+              </div>
+
+              {/* Attribution */}
+              <div className="pt-6 border-t border-stone-200/80 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 text-xs">
+                <div>
+                  <p className="font-bold text-stone-900 tracking-tight text-sm">{rev.author}</p>
+                  {(rev.location || rev.projectType) && (
+                    <p className="text-stone-500 font-medium tracking-tight mt-0.5">
+                      {[rev.projectType, rev.location].filter(Boolean).join(' • ')}
+                    </p>
+                  )}
+                </div>
+                {rev.year && (
+                  <span className="text-[11px] font-mono text-stone-400">{rev.year}</span>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-12 border-2 border-dashed border-stone-200 mb-12">
+          <p className="text-stone-400 text-sm">No client reviews added yet. Add reviews in the Admin console.</p>
+        </div>
+      )}
+
+      {/* External Verified Badges & Platforms */}
+      {badges.length > 0 && (
+        <div className="bg-white border border-stone-200 p-8 text-center max-w-2xl mx-auto">
+          <div className="flex items-center justify-center gap-2 mb-3 text-stone-600">
+            <Award size={18} />
+            <h4 className="text-xs uppercase tracking-[0.2em] font-bold">Independent Client Verification</h4>
+          </div>
+          <p className="text-stone-500 text-xs mb-6 font-light">
+            Read comprehensive client testimonials, ratings, and photography across our verified industry profiles.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            {badges.map((badge, bIdx) => (
+              <a
+                key={bIdx}
+                href={badge.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-5 py-2.5 border border-stone-300 text-xs font-bold uppercase tracking-wider text-stone-800 hover:bg-stone-900 hover:text-white hover:border-stone-900 transition-colors inline-flex items-center gap-2"
+              >
+                <span>{badge.label || `View on ${badge.platform}`}</span>
+                {badge.ratingNote && <span className="text-[10px] opacity-70">({badge.ratingNote})</span>}
+                <ExternalLink size={12} />
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 export const SectionRenderer: React.FC<{ sections: Section[]; logoUrl?: string; siteName?: string }> = ({ sections, logoUrl, siteName }) => {
   const hasScrolled = useHasUserScrolled();
   return (
@@ -267,6 +390,7 @@ export const SectionRenderer: React.FC<{ sections: Section[]; logoUrl?: string; 
           case 'standard': return <StandardSection key={idx} idx={idx} section={section} logoUrl={logoUrl} siteName={siteName} hasScrolled={hasScrolled} />;
           case 'gallery': return <GallerySection key={idx} section={section} hasScrolled={hasScrolled} />;
           case 'locations_list': return <LocationsListSection key={idx} section={section} />;
+          case 'reviews_list': return <ReviewsListSection key={idx} section={section} />;
           case 'map': return <MapSection key={idx} />;
           default: return null;
         }

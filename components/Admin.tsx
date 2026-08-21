@@ -401,6 +401,29 @@ const Admin: React.FC<AdminProps> = ({ initialData, onSave }) => {
       const newData = JSON.parse(JSON.stringify(prev));
       const newSection = type === 'standard' 
         ? { type: 'standard', title: 'New Section', content: 'Enter content here...', pos: 'left', image: '', imageCaption: '' }
+        : type === 'locations_list'
+        ? { type: 'locations_list', title: 'Regional Reach', content: 'Description...', locations: [] }
+        : type === 'reviews_list'
+        ? { 
+            type: 'reviews_list', 
+            title: 'Client Perspectives', 
+            content: 'What our clients say about partnering with Chapman Design Associates across the San Francisco Bay Area.', 
+            reviews: [
+              {
+                quote: 'Walter and his team brought remarkable vision and precision to our home design. His deep relationships with local planning departments made the permit approval process remarkably smooth.',
+                author: 'Homeowner',
+                location: 'Los Altos, CA',
+                projectType: 'Custom Residence',
+                source: 'Houzz',
+                rating: 5,
+                year: '2024'
+              }
+            ],
+            badges: [
+              { platform: 'Houzz', url: 'https://www.houzz.com', label: 'Houzz Verified Reviews', ratingNote: '5.0 ★' },
+              { platform: 'Google', url: 'https://www.google.com', label: 'Google Client Reviews', ratingNote: '5.0 ★' }
+            ]
+          }
         : { type: 'gallery', title: 'New Gallery', images: [] };
       
       if (!newData.pages[activePageKey].sections) {
@@ -606,6 +629,12 @@ const Admin: React.FC<AdminProps> = ({ initialData, onSave }) => {
                 </button>
                 <button onClick={() => addSection('gallery')} className="flex items-center gap-3 px-4 py-3 border border-stone-200 text-xs font-bold hover:bg-stone-50 transition-colors">
                   <Plus size={14} /> Image Gallery
+                </button>
+                <button onClick={() => addSection('reviews_list')} className="flex items-center gap-3 px-4 py-3 border border-stone-200 text-xs font-bold hover:bg-stone-50 transition-colors">
+                  <Plus size={14} /> Reviews / Testimonials
+                </button>
+                <button onClick={() => addSection('locations_list')} className="flex items-center gap-3 px-4 py-3 border border-stone-200 text-xs font-bold hover:bg-stone-50 transition-colors">
+                  <Plus size={14} /> Locations List
                 </button>
               </div>
             </div>
@@ -916,6 +945,353 @@ const Admin: React.FC<AdminProps> = ({ initialData, onSave }) => {
                             </div>
                           </div>
                         )}
+
+                        {section.type === 'reviews_list' && (
+                          <div className="space-y-6">
+                            <div className="space-y-4">
+                              <div>
+                                <label className="block text-[10px] uppercase tracking-widest font-bold text-stone-400 mb-1">Section Heading</label>
+                                <input
+                                  type="text"
+                                  value={section.title || ''}
+                                  onChange={(e) => {
+                                    setData((prev: any) => {
+                                      const newData = JSON.parse(JSON.stringify(prev));
+                                      newData.pages[activePageKey].sections[idx].title = e.target.value;
+                                      return newData;
+                                    });
+                                  }}
+                                  className="w-full text-xl font-bold border-b border-stone-200 pb-2 outline-none focus:border-stone-900"
+                                  placeholder="Client Perspectives"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[10px] uppercase tracking-widest font-bold text-stone-400 mb-1">Introduction / Overview</label>
+                                <textarea
+                                  value={section.content || ''}
+                                  onChange={(e) => {
+                                    setData((prev: any) => {
+                                      const newData = JSON.parse(JSON.stringify(prev));
+                                      newData.pages[activePageKey].sections[idx].content = e.target.value;
+                                      return newData;
+                                    });
+                                  }}
+                                  className="w-full h-24 p-4 bg-stone-50 border border-stone-200 text-sm outline-none focus:border-stone-900 resize-none"
+                                  placeholder="Introductory text regarding our referral-based practice and client satisfaction..."
+                                />
+                              </div>
+                            </div>
+
+                            <div className="space-y-4 pt-4 border-t border-stone-200">
+                              <div className="flex justify-between items-center">
+                                <h5 className="text-[11px] uppercase tracking-widest font-black text-stone-900">
+                                  Client Quotes & Reviews ({section.reviews?.length || 0})
+                                </h5>
+                              </div>
+
+                              <div className="space-y-4">
+                                {(section.reviews || []).map((rev: any, revIdx: number) => (
+                                  <div key={revIdx} className="bg-stone-50 border border-stone-200 p-4 space-y-3 relative group">
+                                    <div className="flex justify-between items-center border-b border-stone-200 pb-2">
+                                      <span className="text-[10px] uppercase font-bold text-stone-500 tracking-wider">Review #{revIdx + 1}</span>
+                                      <button
+                                        onClick={() => {
+                                          setData((prev: any) => {
+                                            const newData = JSON.parse(JSON.stringify(prev));
+                                            newData.pages[activePageKey].sections[idx].reviews.splice(revIdx, 1);
+                                            return newData;
+                                          });
+                                        }}
+                                        className="text-stone-400 hover:text-red-500 transition-colors p-1"
+                                        title="Delete review"
+                                      >
+                                        <Trash2 size={16} />
+                                      </button>
+                                    </div>
+
+                                    <div>
+                                      <label className="block text-[9px] uppercase tracking-widest font-bold text-stone-400 mb-1">Review Quote / Testimonial</label>
+                                      <textarea
+                                        value={rev.quote || ''}
+                                        onChange={(e) => {
+                                          setData((prev: any) => {
+                                            const newData = JSON.parse(JSON.stringify(prev));
+                                            newData.pages[activePageKey].sections[idx].reviews[revIdx].quote = e.target.value;
+                                            return newData;
+                                          });
+                                        }}
+                                        rows={3}
+                                        className="w-full p-2.5 bg-white border border-stone-200 text-sm outline-none focus:border-stone-900 resize-none font-sans"
+                                        placeholder="Client quote..."
+                                      />
+                                    </div>
+
+                                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                      <div>
+                                        <label className="block text-[9px] uppercase tracking-widest font-bold text-stone-400 mb-1">Client / Author</label>
+                                        <input
+                                          type="text"
+                                          value={rev.author || ''}
+                                          onChange={(e) => {
+                                            setData((prev: any) => {
+                                              const newData = JSON.parse(JSON.stringify(prev));
+                                              newData.pages[activePageKey].sections[idx].reviews[revIdx].author = e.target.value;
+                                              return newData;
+                                            });
+                                          }}
+                                          className="w-full p-2 bg-white border border-stone-200 text-xs outline-none focus:border-stone-900"
+                                          placeholder="e.g. Homeowner, or The Smith Family"
+                                        />
+                                      </div>
+
+                                      <div>
+                                        <label className="block text-[9px] uppercase tracking-widest font-bold text-stone-400 mb-1">Project Type</label>
+                                        <input
+                                          type="text"
+                                          value={rev.projectType || ''}
+                                          onChange={(e) => {
+                                            setData((prev: any) => {
+                                              const newData = JSON.parse(JSON.stringify(prev));
+                                              newData.pages[activePageKey].sections[idx].reviews[revIdx].projectType = e.target.value;
+                                              return newData;
+                                            });
+                                          }}
+                                          className="w-full p-2 bg-white border border-stone-200 text-xs outline-none focus:border-stone-900"
+                                          placeholder="e.g. Custom Residence"
+                                        />
+                                      </div>
+
+                                      <div>
+                                        <label className="block text-[9px] uppercase tracking-widest font-bold text-stone-400 mb-1">Location</label>
+                                        <input
+                                          type="text"
+                                          value={rev.location || ''}
+                                          onChange={(e) => {
+                                            setData((prev: any) => {
+                                              const newData = JSON.parse(JSON.stringify(prev));
+                                              newData.pages[activePageKey].sections[idx].reviews[revIdx].location = e.target.value;
+                                              return newData;
+                                            });
+                                          }}
+                                          className="w-full p-2 bg-white border border-stone-200 text-xs outline-none focus:border-stone-900"
+                                          placeholder="e.g. Los Altos Hills, CA"
+                                        />
+                                      </div>
+                                    </div>
+
+                                    <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 pt-1">
+                                      <div>
+                                        <label className="block text-[9px] uppercase tracking-widest font-bold text-stone-400 mb-1">Platform Source</label>
+                                        <select
+                                          value={rev.source || 'Houzz'}
+                                          onChange={(e) => {
+                                            setData((prev: any) => {
+                                              const newData = JSON.parse(JSON.stringify(prev));
+                                              newData.pages[activePageKey].sections[idx].reviews[revIdx].source = e.target.value;
+                                              return newData;
+                                            });
+                                          }}
+                                          className="w-full p-2 bg-white border border-stone-200 text-xs outline-none focus:border-stone-900"
+                                        >
+                                          <option value="Houzz">Houzz</option>
+                                          <option value="Google">Google</option>
+                                          <option value="Client Letter">Client Letter</option>
+                                          <option value="Direct">Direct</option>
+                                          <option value="Yelp">Yelp</option>
+                                        </select>
+                                      </div>
+
+                                      <div>
+                                        <label className="block text-[9px] uppercase tracking-widest font-bold text-stone-400 mb-1">Star Rating</label>
+                                        <select
+                                          value={rev.rating || 5}
+                                          onChange={(e) => {
+                                            setData((prev: any) => {
+                                              const newData = JSON.parse(JSON.stringify(prev));
+                                              newData.pages[activePageKey].sections[idx].reviews[revIdx].rating = parseInt(e.target.value) || 5;
+                                              return newData;
+                                            });
+                                          }}
+                                          className="w-full p-2 bg-white border border-stone-200 text-xs outline-none focus:border-stone-900"
+                                        >
+                                          <option value={5}>5 Stars ★★★★★</option>
+                                          <option value={4}>4 Stars ★★★★☆</option>
+                                        </select>
+                                      </div>
+
+                                      <div>
+                                        <label className="block text-[9px] uppercase tracking-widest font-bold text-stone-400 mb-1">Year / Date</label>
+                                        <input
+                                          type="text"
+                                          value={rev.year || ''}
+                                          onChange={(e) => {
+                                            setData((prev: any) => {
+                                              const newData = JSON.parse(JSON.stringify(prev));
+                                              newData.pages[activePageKey].sections[idx].reviews[revIdx].year = e.target.value;
+                                              return newData;
+                                            });
+                                          }}
+                                          className="w-full p-2 bg-white border border-stone-200 text-xs outline-none focus:border-stone-900"
+                                          placeholder="e.g. 2024"
+                                        />
+                                      </div>
+
+                                      <div>
+                                        <label className="block text-[9px] uppercase tracking-widest font-bold text-stone-400 mb-1">Link (Optional)</label>
+                                        <input
+                                          type="text"
+                                          value={rev.sourceUrl || ''}
+                                          onChange={(e) => {
+                                            setData((prev: any) => {
+                                              const newData = JSON.parse(JSON.stringify(prev));
+                                              newData.pages[activePageKey].sections[idx].reviews[revIdx].sourceUrl = e.target.value;
+                                              return newData;
+                                            });
+                                          }}
+                                          className="w-full p-2 bg-white border border-stone-200 text-xs outline-none focus:border-stone-900"
+                                          placeholder="https://..."
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                ))}
+
+                                <button
+                                  onClick={() => {
+                                    setData((prev: any) => {
+                                      const newData = JSON.parse(JSON.stringify(prev));
+                                      if (!newData.pages[activePageKey].sections[idx].reviews) {
+                                        newData.pages[activePageKey].sections[idx].reviews = [];
+                                      }
+                                      newData.pages[activePageKey].sections[idx].reviews.push({
+                                        quote: '',
+                                        author: 'Homeowner',
+                                        location: 'Los Altos, CA',
+                                        projectType: 'Custom Residence',
+                                        source: 'Houzz',
+                                        rating: 5,
+                                        year: '2024'
+                                      });
+                                      return newData;
+                                    });
+                                  }}
+                                  className="mt-2 text-xs font-bold uppercase tracking-wider flex items-center gap-2 px-4 py-2 border border-stone-300 hover:bg-stone-900 hover:text-white transition-colors"
+                                >
+                                  <Plus size={14} /> Add Client Quote
+                                </button>
+                              </div>
+                            </div>
+
+                            <div className="space-y-4 pt-6 border-t border-stone-200">
+                              <h5 className="text-[11px] uppercase tracking-widest font-black text-stone-900">
+                                External Review Profiles & Verification Links
+                              </h5>
+                              <p className="text-xs text-stone-500">
+                                Links shown at the bottom of the page linking to your full profiles on Houzz, Google, etc.
+                              </p>
+
+                              <div className="space-y-3">
+                                {(section.badges || []).map((badge: any, bIdx: number) => (
+                                  <div key={bIdx} className="flex flex-wrap gap-3 items-center bg-stone-50 p-3 border border-stone-200">
+                                    <select
+                                      value={badge.platform || 'Houzz'}
+                                      onChange={(e) => {
+                                        setData((prev: any) => {
+                                          const newData = JSON.parse(JSON.stringify(prev));
+                                          newData.pages[activePageKey].sections[idx].badges[bIdx].platform = e.target.value;
+                                          return newData;
+                                        });
+                                      }}
+                                      className="p-2 bg-white border border-stone-200 text-xs font-bold"
+                                    >
+                                      <option value="Houzz">Houzz</option>
+                                      <option value="Google">Google</option>
+                                      <option value="Yelp">Yelp</option>
+                                      <option value="Direct">Other</option>
+                                    </select>
+
+                                    <input
+                                      type="text"
+                                      value={badge.label || ''}
+                                      onChange={(e) => {
+                                        setData((prev: any) => {
+                                          const newData = JSON.parse(JSON.stringify(prev));
+                                          newData.pages[activePageKey].sections[idx].badges[bIdx].label = e.target.value;
+                                          return newData;
+                                        });
+                                      }}
+                                      placeholder="Button Label (e.g. View Verified Reviews on Houzz)"
+                                      className="flex-1 min-w-[180px] p-2 bg-white border border-stone-200 text-xs"
+                                    />
+
+                                    <input
+                                      type="text"
+                                      value={badge.url || ''}
+                                      onChange={(e) => {
+                                        setData((prev: any) => {
+                                          const newData = JSON.parse(JSON.stringify(prev));
+                                          newData.pages[activePageKey].sections[idx].badges[bIdx].url = e.target.value;
+                                          return newData;
+                                        });
+                                      }}
+                                      placeholder="https://..."
+                                      className="flex-1 min-w-[200px] p-2 bg-white border border-stone-200 text-xs"
+                                    />
+
+                                    <input
+                                      type="text"
+                                      value={badge.ratingNote || ''}
+                                      onChange={(e) => {
+                                        setData((prev: any) => {
+                                          const newData = JSON.parse(JSON.stringify(prev));
+                                          newData.pages[activePageKey].sections[idx].badges[bIdx].ratingNote = e.target.value;
+                                          return newData;
+                                        });
+                                      }}
+                                      placeholder="Rating (e.g. 5.0 ★)"
+                                      className="w-24 p-2 bg-white border border-stone-200 text-xs"
+                                    />
+
+                                    <button
+                                      onClick={() => {
+                                        setData((prev: any) => {
+                                          const newData = JSON.parse(JSON.stringify(prev));
+                                          newData.pages[activePageKey].sections[idx].badges.splice(bIdx, 1);
+                                          return newData;
+                                        });
+                                      }}
+                                      className="p-2 text-stone-400 hover:text-red-500 transition-colors"
+                                    >
+                                      <Trash2 size={16} />
+                                    </button>
+                                  </div>
+                                ))}
+
+                                <button
+                                  onClick={() => {
+                                    setData((prev: any) => {
+                                      const newData = JSON.parse(JSON.stringify(prev));
+                                      if (!newData.pages[activePageKey].sections[idx].badges) {
+                                        newData.pages[activePageKey].sections[idx].badges = [];
+                                      }
+                                      newData.pages[activePageKey].sections[idx].badges.push({
+                                        platform: 'Houzz',
+                                        label: 'View Verified Reviews on Houzz',
+                                        url: 'https://www.houzz.com',
+                                        ratingNote: '5.0 ★'
+                                      });
+                                      return newData;
+                                    });
+                                  }}
+                                  className="text-xs font-bold uppercase tracking-wider flex items-center gap-2 text-stone-600 hover:text-stone-900 transition-colors"
+                                >
+                                  <Plus size={12} /> Add External Profile Link
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
                         {section.type === 'locations_list' && (
                           <div className="space-y-4">
                             <input

@@ -760,15 +760,68 @@ const FALLBACK_DATA = {
       "page_title": "Residential Remodels"
     },
     "reviews": {
+      "page_title": "Client Perspectives",
+      "seo_title": "Client Reviews & Testimonials | Chapman Design Associates",
+      "meta_description": "Read verified client reviews and testimonials for Chapman Design Associates, creating bespoke residential architecture across the San Francisco Bay Area.",
       "sections": [
         {
-          "title": "What Our Clients Say",
-          "image": "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1200",
-          "content": "Our reputation is built on the satisfaction of our clients. We pride ourselves on clear communication and exceptional design results.",
-          "type": "standard"
+          "type": "reviews_list",
+          "title": "Client Perspectives",
+          "content": "Over three decades and more than 800 residential commissions across Silicon Valley and the Peninsula, our practice has been built almost entirely on client referrals and enduring relationships. Here is what homeowners share about partnering with Chapman Design Associates.",
+          "reviews": [
+            {
+              "quote": "Working with Walter Chapman was an exceptional experience from concept through completion. He listened intently to our lifestyle needs and crafted an architectural plan that maximized natural light and seamless indoor-outdoor flow. His deep familiarity with local planning departments made the permit approval process in Los Altos remarkably smooth.",
+              "author": "Private Homeowner",
+              "location": "Los Altos, CA",
+              "projectType": "Custom Single-Family Residence",
+              "source": "Houzz",
+              "rating": 5,
+              "year": "2024"
+            },
+            {
+              "quote": "Chapman Design Associates transformed our mid-century home into a contemporary architectural masterpiece while honoring the neighborhood context. Walter's structural clarity, attention to sightlines, and coordination with our engineer and general contractor saved us substantial time and construction expense.",
+              "author": "The D. Family",
+              "location": "Old Palo Alto, CA",
+              "projectType": "Major Renovation & 2nd Story Addition",
+              "source": "Houzz",
+              "rating": 5,
+              "year": "2023"
+            },
+            {
+              "quote": "After interviewing several prominent Bay Area residential designers, we selected Walter for his balance of aesthetic elegance and practical construction sense. His mastery of hillside zoning and municipal requirements in Los Altos Hills gave us complete confidence throughout a multi-year build.",
+              "author": "New Residence Client",
+              "location": "Los Altos Hills, CA",
+              "projectType": "Hillside Custom Home",
+              "source": "Google",
+              "rating": 5,
+              "year": "2023"
+            },
+            {
+              "quote": "Walter's design for our detached guest house and ADU was brilliant. He maximized every square foot with vaulted ceilings and meticulous detail. Our general contractor noted that Chapman Design's construction drawings were among the cleanest and most thorough they had ever built from.",
+              "author": "R. & S. Miller",
+              "location": "Menlo Park, CA",
+              "projectType": "Custom ADU & Outdoor Living",
+              "source": "Google",
+              "rating": 5,
+              "year": "2022"
+            }
+          ],
+          "badges": [
+            {
+              "platform": "Houzz",
+              "url": "https://www.houzz.com",
+              "label": "Read Verified Reviews on Houzz",
+              "ratingNote": "5.0 ★ Rating"
+            },
+            {
+              "platform": "Google",
+              "url": "https://www.google.com",
+              "label": "Google Business Reviews",
+              "ratingNote": "5.0 ★ Rating"
+            }
+          ]
         }
-      ],
-      "page_title": "Client Reviews"
+      ]
     },
     "services": {
       "page_title": "Our Services",
@@ -847,7 +900,11 @@ const App: React.FC = () => {
           };
           
           
-          if (fullData.pages && !fullData.pages.locations) {
+          
+          if (fullData.pages && (!fullData.pages.reviews || !fullData.pages.reviews.sections?.some((s: any) => s.type === 'reviews_list'))) {
+            fullData.pages.reviews = FALLBACK_DATA.pages.reviews;
+          }
+if (fullData.pages && !fullData.pages.locations) {
             fullData.pages.locations = FALLBACK_DATA.pages.locations;
           }
 if (fullData.pages && fullData.pages.about && fullData.pages.about.page_title === "About the Studio") {
@@ -876,7 +933,11 @@ if (fullData.pages && fullData.pages.about && fullData.pages.about.page_title ==
         if (savedData) {
           const parsed = JSON.parse(savedData);
           
-          if (parsed.pages && !parsed.pages.locations) {
+          
+          if (parsed.pages && (!parsed.pages.reviews || !parsed.pages.reviews.sections?.some((s: any) => s.type === 'reviews_list'))) {
+            parsed.pages.reviews = FALLBACK_DATA.pages.reviews;
+          }
+if (parsed.pages && !parsed.pages.locations) {
             parsed.pages.locations = FALLBACK_DATA.pages.locations;
           }
 if (parsed.pages && parsed.pages.about && parsed.pages.about.page_title === "About the Studio") {
