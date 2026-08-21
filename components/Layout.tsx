@@ -20,6 +20,12 @@ interface LayoutProps {
   };
 }
 
+const HouzzIcon = ({ size = 14 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path d="M1.27 0V24H9.32V16.44H14.68V24H22.73V10.37L6.61 5.75V0H1.27Z"/>
+  </svg>
+);
+
 const SocialIcon = ({ platform, size = 14 }: { platform: string, size?: number }) => {
   switch (platform.toLowerCase()) {
     case 'facebook': return <Facebook size={size} />;
@@ -27,6 +33,7 @@ const SocialIcon = ({ platform, size = 14 }: { platform: string, size?: number }
     case 'linkedin': return <Linkedin size={size} />;
     case 'twitter': return <Twitter size={size} />;
     case 'pinterest': return <Pinterest size={size} />;
+    case 'houzz': return <HouzzIcon size={size} />;
     default: return <Globe size={size} />;
   }
 };
