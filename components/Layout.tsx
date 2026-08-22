@@ -55,7 +55,14 @@ const Layout: React.FC<LayoutProps> = ({ children, activePage, settings = { name
 
   const navItems = [
     { label: 'home', path: '/' },
-    { label: 'about', path: '/about' },
+    { 
+      label: 'about', 
+      path: '/about',
+      children: [
+        { label: 'the studio', path: '/about' },
+        { label: 'testimonials', path: '/testimonials' }
+      ]
+    },
     { 
       label: 'services', 
       path: '/services',

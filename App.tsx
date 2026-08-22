@@ -759,7 +759,7 @@ const FALLBACK_DATA = {
       ],
       "page_title": "Residential Remodels"
     },
-    "reviews": {
+    "testimonials": {
       "page_title": "Client Perspectives",
       "seo_title": "Client Reviews & Testimonials | Chapman Design Associates",
       "meta_description": "Read verified client reviews and testimonials for Chapman Design Associates, creating bespoke residential architecture across the San Francisco Bay Area.",
@@ -901,8 +901,8 @@ const App: React.FC = () => {
           
           
           
-          if (fullData.pages && (!fullData.pages.reviews || !fullData.pages.reviews.sections?.some((s: any) => s.type === 'reviews_list'))) {
-            fullData.pages.reviews = FALLBACK_DATA.pages.reviews;
+          if (fullData.pages && (!fullData.pages.testimonials || !fullData.pages.testimonials.sections?.some((s: any) => s.type === 'reviews_list'))) {
+            fullData.pages.testimonials = FALLBACK_DATA.pages.testimonials;
           }
 if (fullData.pages && !fullData.pages.locations) {
             fullData.pages.locations = FALLBACK_DATA.pages.locations;
@@ -911,6 +911,14 @@ if (fullData.pages && fullData.pages.about && fullData.pages.about.page_title ==
             fullData.pages.about.page_title = "About CDA";
           }
           
+                    if (fullData.pages && fullData.pages.reviews) {
+            fullData.pages.testimonials = fullData.pages.reviews;
+            delete fullData.pages.reviews;
+            try {
+              const docRef = doc(db, 'settings', 'site');
+              setDoc(docRef, fullData);
+            } catch(e) {}
+          }
           setSiteData(fullData);
           try {
             localStorage.setItem('cda_site_data', JSON.stringify(fullData));
@@ -934,8 +942,8 @@ if (fullData.pages && fullData.pages.about && fullData.pages.about.page_title ==
           const parsed = JSON.parse(savedData);
           
           
-          if (parsed.pages && (!parsed.pages.reviews || !parsed.pages.reviews.sections?.some((s: any) => s.type === 'reviews_list'))) {
-            parsed.pages.reviews = FALLBACK_DATA.pages.reviews;
+          if (parsed.pages && (!parsed.pages.testimonials || !parsed.pages.testimonials.sections?.some((s: any) => s.type === 'reviews_list'))) {
+            parsed.pages.testimonials = FALLBACK_DATA.pages.testimonials;
           }
 if (parsed.pages && !parsed.pages.locations) {
             parsed.pages.locations = FALLBACK_DATA.pages.locations;
@@ -1061,6 +1069,19 @@ if (data.pages && data.pages.about && data.pages.about.page_title === "About the
         document.head.appendChild(metaDesc);
       }
       metaDesc.setAttribute('content', pageData.meta_description || siteData?.site_settings?.footer_description || '');
+
+      // Update Robots Tag (noindex for curated pages)
+      let metaRobots = document.querySelector('meta[name="robots"]');
+      if (currentPage === 'locations') {
+        if (!metaRobots) {
+          metaRobots = document.createElement('meta');
+          metaRobots.setAttribute('name', 'robots');
+          document.head.appendChild(metaRobots);
+        }
+        metaRobots.setAttribute('content', 'noindex, nofollow');
+      } else if (metaRobots) {
+        metaRobots.setAttribute('content', 'index, follow');
+      }
 
       // Update Open Graph Tags
       const updateOG = (property: string, content: string) => {
